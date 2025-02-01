@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: azure;
+}
+
+.title {
+
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.is-completed {
+  color: red;
+  text-decoration: line-through;
+}
