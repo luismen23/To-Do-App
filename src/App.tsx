@@ -28,7 +28,13 @@ const addTask = (task: string) => {
 
 const handleSubmit = (event: { preventDefault: () => void }) => {
   event.preventDefault()
-  addTask(value)
+  if (value.length < 1) {
+    alert('agrega una tarea')
+    return
+  } else {
+    addTask(value)
+
+  }
   setValue('')
   
 }
@@ -51,7 +57,13 @@ const handleChangeEdit = (event: { target: { value: SetStateAction<string> } }) 
 
 const handleSubmitEdit = (id: number, e: { preventDefault: () => void }) => {
   e.preventDefault()
-  setTasks(tasks.map(task => task.id === id ? {...task, task: update, editing: !task.editing} : task))
+  if (update.length < 1) {
+    alert('Add a new name to your task')
+    return
+  } else {
+    setTasks(tasks.map(task => task.id === id ? {...task, task: update, editing: !task.editing} : task))
+
+  }
   setUpdate('')
 }
 
@@ -59,23 +71,32 @@ const handleSubmitEdit = (id: number, e: { preventDefault: () => void }) => {
 
 return (
       <div className='container'>
-        <h1 className='title'>To do App</h1>
+        <h1 className='title'>TO-DO APP</h1>
         <form onSubmit={handleSubmit}>
-          <input className='add-task' type="text" value={value} onChange={handleChange}/>
-          <button type="submit">add</button>  
+          <input type="text" value={value} onChange={handleChange}/>
+          <button type="submit" className='button'>add</button>  
         </form>
         <div className='todo-list'>
-          {tasks.map(({task, completed, id, editing}) => {
+          {tasks.map(({task, completed, id, editing}, index) => {
             return(
-              <div key={id} className='task'>
-                <p className={`${completed ? 'is-completed' : ''}`} onClick={() => toggleCompleted(id)}>{task}</p>
-                <button className='edit' onClick={() => editTask(id)}>edit</button>
-                <button className='delete' onClick={() => deleteTask(id)}>delete</button>
-                {
-                editing ? 
-                <form onSubmit={(e) => handleSubmitEdit(id, e)}>
-                  <input value={update} onChange={handleChangeEdit}  />
-                </form> : ''}
+              <div key={id}>
+
+                <div className='task-input'>
+                  <p className={`${completed ? 'is-completed' : ''} task-name`} onClick={() => toggleCompleted(id)}>{index + 1} - {task.charAt(0).toUpperCase() + task.slice(1)}</p>
+                  <div>
+                    <button className='edit' onClick={() => editTask(id)}>edit</button>
+                    <button className='delete' onClick={() => deleteTask(id)}>delete</button>
+                  </div>
+                </div>
+
+                <div className='task-edit'>
+                  {
+                    editing ? 
+                    <form onSubmit={(e) => handleSubmitEdit(id, e)}>
+                    <input value={update} onChange={handleChangeEdit}  />
+                  </form> : ''
+                  }
+                </div>
               </div>
             )
           })}
