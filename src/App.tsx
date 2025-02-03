@@ -6,7 +6,7 @@ uuidv4()
 
 interface Tasks {
   task: string
-  id: number
+  id: string
   completed: boolean
   editing: boolean
 }
@@ -18,7 +18,7 @@ const [tasks, setTasks] = useState<Tasks[] >([])
 const [update, setUpdate] = useState<string>('')
 
 
-function handleChange(event: { target: { value: SetStateAction<string> } }) {
+function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
   setValue(event.target.value)
 }
 
@@ -26,28 +26,26 @@ const addTask = (task: string) => {
   setTasks([...tasks, {task: task, id: uuidv4(), completed: false, editing: false }] )
 }
 
-const handleSubmit = (event: { preventDefault: () => void }) => {
+const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
   if (value.length < 1) {
-    alert('agrega una tarea')
+    alert('Please add a task')
     return
-  } else {
-    addTask(value)
-
-  }
+  } 
+  addTask(value)
   setValue('')
   
 }
 
-const toggleCompleted = (id: number) => {
+const toggleCompleted = (id: string) => {
   setTasks(tasks.map(task => task.id === id ? {...task, completed: !task.completed} : task))
 }
 
-const deleteTask = (id: number) => {
+const deleteTask = (id: string) => {
   setTasks(tasks.filter(task => task.id !== id))
 }
 
-const editTask = (id: number) => {
+const editTask = (id: string) => {
   setTasks(tasks.map(task => task.id === id ? {...task, editing: !task.editing} : task))
 }
 
@@ -55,15 +53,13 @@ const handleChangeEdit = (event: { target: { value: SetStateAction<string> } }) 
   setUpdate(event.target.value)
 }
 
-const handleSubmitEdit = (id: number, e: { preventDefault: () => void }) => {
-  e.preventDefault()
+const handleSubmitEdit = (id: string, event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault()
   if (update.length < 1) {
     alert('Add a new name to your task')
     return
-  } else {
-    setTasks(tasks.map(task => task.id === id ? {...task, task: update, editing: !task.editing} : task))
-
-  }
+  } 
+  setTasks(tasks.map(task => task.id === id ? {...task, task: update, editing: !task.editing} : task))
   setUpdate('')
 }
 
@@ -73,7 +69,7 @@ return (
       <div className='container'>
         <h1 className='title'>TO-DO APP</h1>
         <form onSubmit={handleSubmit}>
-          <input type="text" value={value} onChange={handleChange}/>
+          <input type="text" value={value} onChange={handleChange} placeholder=''/>
           <button type="submit" className='button'>add</button>  
         </form>
         <div className='todo-list'>
@@ -94,6 +90,7 @@ return (
                     editing ? 
                     <form onSubmit={(e) => handleSubmitEdit(id, e)}>
                     <input value={update} onChange={handleChangeEdit}  />
+                    <button className='save' >save</button>
                   </form> : ''
                   }
                 </div>

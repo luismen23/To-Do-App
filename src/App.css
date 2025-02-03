@@ -13,10 +13,6 @@
   font-weight: bold;
 }
 
-.is-completed {
-  color: rgba(232, 7, 7, 0.404);
-  text-decoration: line-through;
-}
 
 .button {
   width: 60px;
@@ -80,6 +76,7 @@ input:focus {
 .task-edit {
   display: flex;
   justify-content: center;
+  margin-top: 8px;
 }
 
 .edit {
@@ -103,4 +100,21 @@ input:focus {
   padding: 10px; 
   cursor: pointer; 
   transition: background-color 0.3s 
+}
+
+.save {
+  
+  background-color: #00ea33e5; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  padding: 10px; 
+  cursor: pointer; 
+  transition: background-color 0.3s 
+  
+}
+
+.is-completed {
+  text-decoration: line-through;
+  color: #d4261ac8;
 }
