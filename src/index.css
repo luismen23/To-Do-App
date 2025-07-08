@@ -4,9 +4,10 @@
 
 body {
   margin: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #f5deb3;
+  width: 100svw;
+  height: 100svh;
+  background-image: url('src/assets/bg.avif');
+  color: #eef4ed;
 }
 
 @layer base {
