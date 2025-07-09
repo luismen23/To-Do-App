@@ -19,7 +19,7 @@ function LoginPage() {
           <Link to='/login'>Sign in</Link>
         </button>
         <button className='text-xl border-t-2 border-r-2 rounded-t-md px-4 py-2 bg-[#0B2545] border-[#134074] transition duration-100  hover:scale-105'>
-          Sign up
+          <Link to='/signup'>Sign up</Link>
         </button>
       </div>
     </div>

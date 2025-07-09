@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'
 import WelcomePage from './pages/WelcomePage'
 import TasksPage from './pages/TasksPage'
 import CreatingTaskPage from './pages/CreatingTaskPage'
+import SignUpPage from './pages/SignUpPage'
 // import LoginPage from './pages/LoginPage'
 
 const router = createBrowserRouter([
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignUpPage />,
   },
   {
     path: '/tasks',
@@ -27,7 +32,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className='w-full flex flex-col items-center font-serif'>
+    <div className='w-full h-full flex flex-col items-center font-serif'>
       {/* <Header avatar='https://github.com/shadcn.png' /> */}
       <RouterProvider router={router} />
     </div>

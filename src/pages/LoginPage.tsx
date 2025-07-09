@@ -15,16 +15,16 @@ import { z } from 'zod'
 
 function LoginPage() {
   const formSchema = z.object({
-    name: z
-      .string()
-      .min(3, {
-        message: 'Your name need to be at least 3 characters long',
-      })
-      .max(20),
     email: z
       .string()
       .min(4, {
-        message: 'Add a valid emali',
+        message: 'Add a valid email',
+      })
+      .max(20),
+    password: z
+      .string()
+      .min(7, {
+        message: 'Your password neet to be at least 8 characters',
       })
       .max(20),
   })
@@ -32,7 +32,8 @@ function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      email: '',
+      password: '',
     },
   })
 
@@ -51,17 +52,18 @@ function LoginPage() {
             <StepBack className='inline' /> Back
           </Link>
         </div>
-        <h2 className='text-2xl'>Welcome back!</h2>
+        <h2 className='text-2xl'>Welcome back</h2>
         <FormField
           control={form.control}
-          name='name'
+          name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='text-md'>Name</FormLabel>
+              <FormLabel className='text-md'>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='your name'
+                  placeholder='email'
                   className='border-slate-600 '
+                  type='email'
                   {...field}
                 />
               </FormControl>
@@ -74,14 +76,15 @@ function LoginPage() {
         />
         <FormField
           control={form.control}
-          name='email'
+          name='password'
           render={({ field }) => (
             <FormItem className='relative'>
-              <FormLabel className='text-md'>Email</FormLabel>
+              <FormLabel className='text-md'>Password</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='your email'
-                  className='border-slate-600 '
+                  placeholder='password '
+                  className='border-slate-600'
+                  type='password'
                   {...field}
                 />
               </FormControl>
