@@ -1,6 +1,7 @@
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,6 +34,7 @@ function SignUpPage() {
         message: 'Your password neet to be at least 8 characters',
       })
       .max(20),
+    checkbox: z.boolean(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,6 +43,7 @@ function SignUpPage() {
       name: '',
       email: '',
       password: '',
+      checkbox: false,
     },
   })
 
@@ -49,13 +52,13 @@ function SignUpPage() {
     form.reset()
   }
   return (
-    <div className='w-full absolute bottom-0'>
+    <div className='w-full h-svh relative'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className=' flex flex-col bg-[#8DA9C4] gap-3 w-full rounded-t-3xl  p-10  relative '
+          className=' flex flex-col bg-[#8DA9C4] gap-3 w-full  justify-end  rounded-t-3xl p-10 absolute bottom-0 '
         >
-          <div className='absolute -top-12 left-0 flex text-center'>
+          <div className='absolute -top-32 left-2 flex text-center'>
             <Link to='/'>
               <StepBack className='inline' /> Back
             </Link>
@@ -119,6 +122,26 @@ function SignUpPage() {
                 {/* <FormDescription>
             This is your public display name.
           </FormDescription> */}
+                <FormMessage className='absolute' />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='checkbox'
+            render={({ field }) => (
+              <FormItem className='relative flex gap-2'>
+                <FormControl>
+                  <Input
+                    className='border-slate-600 w-4'
+                    type='checkbox'
+                    required
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  I agree to the processing of <strong> Personal data.</strong>
+                </FormDescription>
                 <FormMessage className='absolute' />
               </FormItem>
             )}
