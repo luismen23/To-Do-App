@@ -1,7 +1,7 @@
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,22 +19,19 @@ function SignUpPage() {
     name: z
       .string()
       .min(3, {
-        message: 'Your name need to be at least 3 characters long',
+        message: 'Your name needs to be at least 3 characters long.',
       })
       .max(20),
-    email: z
-      .string()
-      .min(4, {
-        message: 'Add a valid emali',
-      })
-      .max(20),
+    email: z.string().email({ message: 'Please enter a valid email.' }).max(20),
     password: z
       .string()
-      .min(7, {
-        message: 'Your password neet to be at least 8 characters',
+      .min(8, {
+        message: 'Your password needs to be at least 8 characters.',
       })
       .max(20),
-    checkbox: z.boolean(),
+    checkbox: z.boolean().refine(val => val === true, {
+      message: 'You must agree to the terms.',
+    }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,16 +50,16 @@ function SignUpPage() {
   }
   return (
     <div className='w-full h-svh relative'>
+      <div className='absolute top-6 left-2 flex text-center'>
+        <Link to='/'>
+          <StepBack className='inline' /> Back
+        </Link>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className=' flex flex-col bg-[#8DA9C4] gap-3 w-full  justify-end  rounded-t-3xl p-10 absolute bottom-0 '
         >
-          <div className='absolute -top-32 left-2 flex text-center'>
-            <Link to='/'>
-              <StepBack className='inline' /> Back
-            </Link>
-          </div>
           <h2 className='text-2xl w-auto mx-auto'>Get Started</h2>
           <FormField
             control={form.control}
@@ -80,7 +77,7 @@ function SignUpPage() {
                 {/* <FormDescription>
               This is your public display name.
             </FormDescription> */}
-                <FormMessage className='absolute' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -94,14 +91,13 @@ function SignUpPage() {
                   <Input
                     placeholder='your email'
                     className='border-slate-600 '
-                    type='email'
                     {...field}
                   />
                 </FormControl>
                 {/* <FormDescription>
               This is your public display name.
             </FormDescription> */}
-                <FormMessage className='absolute' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -122,7 +118,7 @@ function SignUpPage() {
                 {/* <FormDescription>
             This is your public display name.
           </FormDescription> */}
-                <FormMessage className='absolute' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -130,19 +126,20 @@ function SignUpPage() {
             control={form.control}
             name='checkbox'
             render={({ field }) => (
-              <FormItem className='relative flex gap-2'>
-                <FormControl>
-                  <Input
-                    className='border-slate-600 w-4'
-                    type='checkbox'
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  I agree to the processing of <strong> Personal data.</strong>
-                </FormDescription>
-                <FormMessage className='absolute' />
+              <FormItem>
+                <div className='flex items-center gap-2'>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className='!mt-0 cursor-pointer font-normal'>
+                    I agree to the processing of{' '}
+                    <strong> Personal data.</strong>
+                  </FormLabel>
+                </div>
+                <FormMessage />
               </FormItem>
             )}
           />

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function LoginPage() {
+function WelcomePage() {
   return (
     <div className='w-screen h-svh flex flex-col justify-between items-center text-center'>
       <div></div>
@@ -26,4 +26,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default WelcomePage
